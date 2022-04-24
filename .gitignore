@@ -1,0 +1,4 @@
+database/
+api/config.js
+.env
+api/node_modules/

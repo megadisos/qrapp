@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+    api:
+        build: ./api
+        network_mode: host
+        volumes:
+            - ./api/api.js:/api/api.js
+            - ./api/config.js:/api/config.js
+            - ./api/queries.js:/api/queries.js
+            - ./api/js/dataProcessing.js:/api/js/dataProcessing.js
+    db:
+        image: postgres
+        restart: always
+        volumes:
+            - ${PGLOCAL}:${PGDATA}
+        environment:
+            - POSTGRES_PASSWORD=${PGPASSWORD}
+            - POSTGRES_DB=${PGDB}
+            - PGDATA=${PGDATA}
+            - POSTGRES_USER=${PGUSER}
+        ports:
+            - ${PGPORT}:5432
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8085:8080
